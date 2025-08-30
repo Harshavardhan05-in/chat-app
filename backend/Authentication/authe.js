@@ -6,7 +6,7 @@ const UserDetails = require('../models/LogInSchema');
 const authe = async(req,res,next) => {
     try {
         const token = req.cookies.jwt;
-        const verify = jwt.verify(token,"Harshavardhanushakolafrombhushanraopet");
+        const verify = jwt.verify(token,process.env.JWT_SIGN);
         const user = await UserDetails.findOne({_id:verify._id});
         req.userdata = user;
         next();
@@ -19,7 +19,7 @@ const adminAuth = async(req,res,next)=>{
     try {
         const token = req.cookies.admin;
         console.log("NEW TOEN:",token);
-        const verify = jwt.verify(token,"HarshaVardhanRguktBasar96325481");
+        const verify = jwt.verify(token,process.env.ADMIN_SIGN);
         if(verify.role!=="admin"){
             throw new Error("Unauthorized");
         }
