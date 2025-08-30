@@ -43,7 +43,7 @@ export const Chat = () =>{
       if(res.status===200){
         setLoginData(res.data);
         setValidate(true);
-        const mysocket = io("http://localhost:5000",{
+        const mysocket = io(process.env.REACT_APP_BACKEND_URL,{
         transports:['websocket'],
         withCredentials:true,
         query:{userId:res.data._id}
