@@ -16,13 +16,73 @@ const Requests = require('./models/request');
 const Messages = require('./models/messages');
 
 const corsOption = {
-    origin:"http://localhost:5173",
+    origin:["http://localhost:5173",process.env.FRONTEND_URL],
     methods:"POST,PUT,PATCH,DELETE,GET",
     credentials:true
 }
 app.use(cors(corsOption));
 app.use(express.json());
 app.use(cookieParser());
+
+
+const {Server} = require("socket.io");
+const http = require('http');
+const server = http.createServer(app);
+
+const port = process.env.PORT || 5000 ;
+
+
+
+const io = new Server(server,{
+    cors:{
+        origin:"http://localhost:5173",
+        methods:["GET","POST"],
+        credentials:true,
+    }
+
+});
+
+
+
+io.on("connection",(socket)=>{
+    // console.log(" New User Connected To the Socket:",socket.id);
+
+    const userId = socket.handshake.query.userId;
+    if(userId){
+       UserDetails.findByIdAndUpdate(userId,{isonline:true}).catch(err=>console.log("ONLINE ERROR:",err));
+
+    }
+
+    //Mark user as online
+
+    socket.on("join_chat",(chatId)=>{
+        socket.join(chatId);
+        console.log("User joined Room ",chatId);
+    });
+
+    socket.on("leaveRoom",(chatId)=>{
+        socket.leave(chatId);
+        // console.log("User",socket.id," left room :",chatId)
+    })
+
+    socket.on("send_message",(curr)=>{
+        console.log("INCMG MSSG :",curr);
+        const chatId = curr.chartlinked._id;
+        console.log("SENDER LINKED CHAT:",chatId);
+        io.to(chatId).emit("receive_message",curr);
+
+
+    })
+
+    socket.on("disconnect",()=>{
+        if(userId){
+            UserDetails.findByIdAndUpdate(userId,{
+                isonline:false,lastseen:new Date()
+            }).catch(err=>console.log("TIME UPDATION ERR:",err));
+        }
+        // console.log("client disconnected",socket.id)
+    })
+})
 
 
 
@@ -430,15 +490,15 @@ app.get("/chatallmsg/:id",async(req,res)=>{
     }
 })
 
-app.get("/logoutadmin",async(req,res)=>{
-    try {
-        res.clearCookie("admin");
-        res.status(201).send("Sucess");
-    } catch (error) {
-        console.log(error);
-        res.status(500).send(error);
-    }
-})
+// app.get("/logoutadmin",async(req,res)=>{
+//     try {
+//         res.clearCookie("admin");
+//         res.status(201).send("Sucess");
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send(error);
+//     }
+// })
 
 app.get("/checkreq/:id",async(req,res)=>{
     try {
@@ -497,6 +557,11 @@ app.delete("/removereq/:userId",async(req,res)=>{
     }
 })
 
-module.exports = app;
+// module.exports = app;
+
+
+server.listen(port,()=>{
+    console.log("Its is RUNNING on Port NUmber"+port);
+})
 
 
