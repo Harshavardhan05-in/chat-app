@@ -131,7 +131,7 @@ app.post("/postlogin",async(req,res)=>{
     } 
 })
 
-app.get("/getlogin",authe,(req,res)=>{
+app.get("/getlogin",(req,res)=>{
     try {
         const data = req.userdata;
         res.status(200).send(data);
