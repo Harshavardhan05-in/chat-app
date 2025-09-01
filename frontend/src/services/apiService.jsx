@@ -191,6 +191,7 @@ export const logoutAdmin = () => {
 }
 
 export const getNonReqUsers = (id) => {
+    console.log("NON REQ USER CALL");
     return api.get(`/checkreq/${id}`);
 }
 
