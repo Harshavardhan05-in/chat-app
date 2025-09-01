@@ -17,6 +17,7 @@ export const postLoginData = (data) => {
 }
 
 export const getLoginData = () => {
+    console.log("INSIDE API SERVICES:LOGIN DATA FUN");
     return api.get("/getlogin",{
         withCredentials:true,
     })

@@ -13,6 +13,8 @@ export const Home = () => {
 
   const[loginData,setLoginData] = useState({});
 
+  console.log("INSIDE HOME PAGE");
+
   //Validation 
   const[isValidated,setValidate] = useState(false);
   const[allCharts,setAllCharts] = useState([]);
@@ -21,8 +23,10 @@ export const Home = () => {
   const[inputvalue,setInputValue] = useState("")
 
   const getUserLoginDetails = async()=>{
+    console.log("INSIDE USER LOGIN DETAILS FUnCTION");
     try {
       const res = await getLoginData();
+      console.log("USER LOGIN DETAILS:",res);
 
       if(res.status===200){
         setLoginData(res.data);
@@ -30,6 +34,7 @@ export const Home = () => {
       }
     } catch (error) {
       setValidate(false);
+      console.log("USER LOGIN DETAILS ERROR:",error);
     }
   }
   useEffect(()=>{
@@ -39,7 +44,7 @@ export const Home = () => {
   const getAllMyCharts = async() => {
      if(loginData._id!==undefined){
           try {
-          
+            console.log("GET ALL CHARTS DATA:",res);
             const res = await getMyCharts(loginData._id);
             if(res.status===200){
               res.data.map((curr)=>{
@@ -55,7 +60,8 @@ export const Home = () => {
             }
             
           } catch (error) {
-            console.log(error);
+            console.log("GET ALL CHARTS ERROR :",error);
+
           }
      }
   }
@@ -75,7 +81,7 @@ export const Home = () => {
   })
 
 
-  if(isValidated){
+  // if(isValidated){
     if(allCharts.length===0){ return (
       <div className="min-h-screen bg-gray-900 text-white p-4">
           <header className="flex justify-between items-center mb-4">
@@ -283,7 +289,7 @@ export const Home = () => {
 </div>
 
 ); }
-  else{
-    return <Error />;
-  }
-}
+  // else{
+  //   return <Error />;
+  // }
+// }

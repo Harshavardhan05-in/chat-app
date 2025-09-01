@@ -136,10 +136,11 @@ app.post("/postlogin",async(req,res)=>{
 
 app.get("/getlogin",authe,(req,res)=>{
     try {
+        console.log("INSIDE GET LOGIN BACKEND FUNC");
         const data = req.userdata;
         res.status(200).send(data);
     } catch (error) {
-        console.log(error);
+        console.log("BACKEND ERROR :",error);
         res.status(500).send(error);
     }
 })
