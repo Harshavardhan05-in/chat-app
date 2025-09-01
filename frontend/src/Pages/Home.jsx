@@ -81,7 +81,7 @@ export const Home = () => {
   })
 
 
-  // if(isValidated){
+  if(isValidated){
     if(allCharts.length===0){ return (
       <div className="min-h-screen bg-gray-900 text-white p-4">
           <header className="flex justify-between items-center mb-4">
@@ -289,7 +289,7 @@ export const Home = () => {
 </div>
 
 ); }
-  // else{
-  //   return <Error />;
-  // }
-// }
+  else{
+    return <Error />;
+  }
+}
