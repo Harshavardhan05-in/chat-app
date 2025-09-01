@@ -123,6 +123,9 @@ app.post("/postlogin",async(req,res)=>{
             console.log("TOKEN INSIDE INDEX.JS:",token);
             if(isMatched){
                 res.cookie("jwt",token,{
+                    // httpOnly: true,   // prevents client-side JS from accessing it
+                    secure: true,     // required if you're using https (Render uses https)
+                    sameSite: "None",
                     expires:new Date(Date.now()+5000000),
                 })
                 res.status(200).send(user);
