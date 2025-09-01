@@ -120,6 +120,7 @@ app.post("/postlogin",async(req,res)=>{
         }else{
             const isMatched = await bcrypt.compare(data.password,user.password);
             const token = await user.generateAuthToken();
+            console.log("TOKEN INSIDE INDEX.JS:",token);
             if(isMatched){
                 res.cookie("jwt",token,{
                     expires:new Date(Date.now()+5000000),
