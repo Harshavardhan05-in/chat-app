@@ -37,7 +37,10 @@ export const RequestPage = () => {
     try {
       if(Object.keys(loginData).length!==0){
           const res = await getNonReqUsers(loginData._id);
+            console.log("USERS DATA NEW BOY:",res);
+
           if(res.status==201){
+            console.log("USERS DATA:",res);
             setAllUsers(res.data);
           }
       }
