@@ -1,26 +1,29 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
+
+const app = express();
+
+const corsOption = {
+    origin:["https://chat-app-3-hfer.onrender.com"],
+    methods:"POST,PUT,PATCH,DELETE,GET",
+    credentials:true
+}
+app.use(cors(corsOption));
+app.set("trust proxy", 1);
+
+
 const UserDetails = require('./models/LogInSchema');
 require('./db/connection');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
-const app = express();
-
-const cors = require('cors');
 const cookieParser = require('cookie-parser')
 const {authe,adminAuth} = require('./Authentication/authe');
 const Charts = require("./models/chat");
 const Requests = require('./models/request');
 const Messages = require('./models/messages');
 
-const corsOption = {
-    origin:"https://chat-app-3-hfer.onrender.com",
-    methods:"POST,PUT,PATCH,DELETE,GET",
-    credentials:true
-}
-app.use(cors(corsOption));
 app.use(express.json());
 app.use(cookieParser());
 
