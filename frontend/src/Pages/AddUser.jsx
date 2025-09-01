@@ -9,7 +9,7 @@ import {toast} from "react-hot-toast";
 export const RequestPage = () => {
 
   console.log("COMPONENT LOADING :");
-  
+
 
   const[inputValue,setInputValue] = useState("")
 
@@ -22,6 +22,7 @@ export const RequestPage = () => {
 
     try {
       const res = await getLoginData();
+      console.log("LOGIN RES:",res);
 
       if(res.status===200){
         setLoginData(res.data);
