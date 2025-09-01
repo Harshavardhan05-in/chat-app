@@ -8,6 +8,9 @@ import {toast} from "react-hot-toast";
 
 export const RequestPage = () => {
 
+  console.log("COMPONENT LOADING :");
+  
+
   const[inputValue,setInputValue] = useState("")
 
   const[loginData,setLoginData] = useState({});
