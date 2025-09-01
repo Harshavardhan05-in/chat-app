@@ -34,6 +34,7 @@ export const RequestPage = () => {
     }
   }
   useEffect(()=>{
+    console.log("MAMAAAAAA");
     getUserLoginDetails();
   },[])
 
