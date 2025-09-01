@@ -6,7 +6,7 @@ const app = express();
 
 const corsOption = {
     origin:["https://chat-app-3-hfer.onrender.com"],
-    methods:"POST,PUT,PATCH,DELETE,GET",
+    methods:["POST","PUT","PATCH","DELETE","GET"],
     credentials:true
 }
 app.use(cors(corsOption));
