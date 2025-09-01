@@ -4,14 +4,16 @@ const UserDetails = require('../models/LogInSchema');
 
 
 const authe = async(req,res,next) => {
+    console.log("INSIDE AUTHENTICATE FUN");
     try {
         const token = req.cookies.jwt;
+        console.log("TOKEN :",token);
         const verify = jwt.verify(token,process.env.JWT_SIGN);
         const user = await UserDetails.findOne({_id:verify._id});
         req.userdata = user;
         next();
     } catch (error) {
-        console.log(error);
+        console.log("AUTH ERROR:",error);
     }
 }
 
