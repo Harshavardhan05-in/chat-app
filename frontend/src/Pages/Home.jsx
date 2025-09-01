@@ -44,7 +44,6 @@ export const Home = () => {
   const getAllMyCharts = async() => {
      if(loginData._id!==undefined){
           try {
-            // console.log("GET ALL CHARTS DATA:",res);
             const res = await getMyCharts(loginData._id);
             if(res.status===200){
               res.data.map((curr)=>{
