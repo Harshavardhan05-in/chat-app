@@ -16,7 +16,7 @@ const Requests = require('./models/request');
 const Messages = require('./models/messages');
 
 const corsOption = {
-    origin:["http://localhost:5173",process.env.FRONTEND_URL],
+    origin:"https://chat-app-3-hfer.onrender.com",
     methods:"POST,PUT,PATCH,DELETE,GET",
     credentials:true
 }
@@ -35,7 +35,7 @@ const port = process.env.PORT || 5000 ;
 
 const io = new Server(server,{
     cors:{
-        origin:["http://localhost:5173",process.env.FRONTEND_URL],
+        origin:"https://chat-app-3-hfer.onrender.com",
         methods:["GET","POST"],
         credentials:true,
     }
