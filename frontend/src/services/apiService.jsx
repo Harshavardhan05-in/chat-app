@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL:process.env.REACT_APP_BACKEND_URL,
+    baseURL:"https://chat-app-rg6r.onrender.com",
 })
 
 export const postRegisterDetails = (data) => {
