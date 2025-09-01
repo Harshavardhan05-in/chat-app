@@ -113,7 +113,7 @@ export const Profile= () => {
     }
   }
   
-  if(isValidated){
+  // if(isValidated){
   return (
     <>
     <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center px-4">
@@ -157,9 +157,9 @@ export const Profile= () => {
     </div>
     </>
   );}
-  else{
-    return (<Error />)
-  }
-};
+//   else{
+//     return (<Error />)
+//   }
+// };
 
 

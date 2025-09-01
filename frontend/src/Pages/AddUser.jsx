@@ -77,7 +77,7 @@ export const RequestPage = () => {
 
   }
   
-  if(isValidated){
+  // if(isValidated){
   return (
     <div className="min-h-screen bg-zinc-900 text-white px-4 py-6">
       <h1 className="text-3xl font-bold mb-4 text-center">Connect with Users</h1>
@@ -126,7 +126,8 @@ export const RequestPage = () => {
       }
       
     </div>
-  )}else{
-    return (<Error />)
-  }
-};
+  )}
+  // else{
+  //   return (<Error />)
+  // }
+// };

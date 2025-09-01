@@ -112,7 +112,7 @@ export const GroupBuilderPage = () => {
   }
 
 
-  if(isValidated){
+  // if(isValidated){
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6">
@@ -204,8 +204,9 @@ export const GroupBuilderPage = () => {
         </div>
       </div>
     </div>
-  );}else{
-    return (<Error />)
-  }
-};
+  );}
+//   else{
+//     return (<Error />)
+//   }
+// };
 
