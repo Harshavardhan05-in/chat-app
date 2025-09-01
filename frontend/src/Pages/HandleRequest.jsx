@@ -98,7 +98,7 @@ export const NotificationPage = () => {
 
   let count = 1;
 
-  // if(isValidated){
+  if(isValidated){
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 font-sans p-8 sm:p-12 w-full mx-auto">
       <h1 className="text-4xl font-extrabold mb-12 text-center tracking-wide select-none">
@@ -155,7 +155,7 @@ export const NotificationPage = () => {
       </div>
     </div>
   );}
-//   else{
-//     return (<Error />)
-//   }
-// }
+  else{
+    return (<Error />)
+  }
+}

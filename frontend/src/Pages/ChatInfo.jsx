@@ -74,7 +74,7 @@ export const ChatInfo = () => {
       }
     }
 
-  // if(isValidated){
+  if(isValidated){
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-green-100 via-blue-100 to-indigo-100 p-8 flex flex-col items-center justify-start">
       {
@@ -171,8 +171,8 @@ export const ChatInfo = () => {
       }
     </div>
   );}
-//   else{
-//     return (<Error />)
-//   }
-// };
+  else{
+    return (<Error />)
+  }
+};
 

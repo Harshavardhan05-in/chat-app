@@ -203,7 +203,7 @@ export const GroupPage = () => {
     return <div className="h-screen flex items-center justify-center text-white">Loading...</div>;
   }
 
-  // if(isValidated){
+  if(isValidated){
   return (
     <div className="flex h-screen bg-gray-900 text-white max-h-[800px] overflow-y-auto pb-3">
       {/* Sidebar (3/8) */}
@@ -345,7 +345,7 @@ export const GroupPage = () => {
       </div>
     </div>
   );}
-//   else{
-//     return (<Error />)
-//   }
-// };
+  else{
+    return (<Error />)
+  }
+};
