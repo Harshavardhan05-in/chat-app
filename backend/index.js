@@ -318,7 +318,7 @@ app.post("/addpersonalchat",async(req,res)=>{
 app.get("/getchat/:id",async(req,res)=>{
     try {
         const chatId = req.params.id;
-        const result = await Charts.find({_id:chatId}).populate("members creator")
+        const result = await Charts.findById(chatId).populate("members creator")
         res.status(200).send(result);
     } catch (error) {
         console.log(error);
