@@ -4,6 +4,11 @@ export const api = axios.create({
     baseURL:"https://chat-app-rg6r.onrender.com",
 })
 
+api.interceptors.request.use((config) => {
+  config.metadata = { startTime: new Date() }; // store start time
+  return config;
+});
+
 // Response Interceptor → after getting response
 api.interceptors.response.use(
   (response) => {
