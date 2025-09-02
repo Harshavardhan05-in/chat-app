@@ -4,6 +4,28 @@ export const api = axios.create({
     baseURL:"https://chat-app-rg6r.onrender.com",
 })
 
+// Response Interceptor → after getting response
+api.interceptors.response.use(
+  (response) => {
+    const endTime = new Date();
+    const duration = endTime - response.config.metadata.startTime;
+    console.log(
+      `⏱️ API Call: ${response.config.url} | Time Taken: ${duration} ms`
+    );
+    return response;
+  },
+  (error) => {
+    const endTime = new Date();
+    if (error.config && error.config.metadata) {
+      const duration = endTime - error.config.metadata.startTime;
+      console.log(
+        `❌ API Call Failed: ${error.config.url} | Time Taken: ${duration} ms`
+      );
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const postRegisterDetails = (data) => {
     return api.post("/postregister",data,{
         withCredentials:true,
