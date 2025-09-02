@@ -45,6 +45,19 @@ const io = new Server(server,{
 
 });
 
+// ✅ Global Middleware to measure request time
+app.use((req, res, next) => {
+  const start = Date.now(); // capture start time
+
+  // when the response finishes, calculate time
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    console.log(`[API TIME] ${req.method} ${req.originalUrl} took ${duration} ms`);
+  });
+
+  next(); // move to next middleware/route
+});
+
 
 
 io.on("connection",(socket)=>{
