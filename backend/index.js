@@ -459,8 +459,11 @@ app.post("/adminlogin",async(req,res)=>{
         const key = req.body.secretKey;
         if(key===process.env.ADMIN_SECRET_KEY){
             const token = jwt.sign({role:"admin"},process.env.ADMIN_SIGN);
+            console.log("ADMIN TOKEN --: ",token);
             res.cookie("admin",token,{
                     expires:new Date(Date.now()+5000000),
+                    secure: true,     // required if you're using https (Render uses https)
+                    sameSite: "None",
             });
             res.status(201).send("SUCESS");
         }else{
