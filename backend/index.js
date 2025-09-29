@@ -405,23 +405,16 @@ app.get("/mymsg",async(req,res)=>{
     }
 })
 
-app.get("/getchat/:id", async (req, res) => {
+app.get("/getchat/:id",async(req,res)=>{
     try {
         const chatId = req.params.id;
-
-        const chat = await Charts.findById(chatId)
-            .select("name groupchat creator members") // only necessary fields
-            .lean(); // returns plain JS object, faster than full Mongoose doc
-
-        if (!chat) return res.status(404).send("Chat not found");
-
-        res.status(200).send(chat);
+        const result = await Charts.findById(chatId);
+        res.status(200).send(result);
     } catch (error) {
-        console.log("Error in /getchat/:id ->", error);
+        console.log(error);
         res.status(500).send(error);
     }
-});
-
+})
 
 app.get("/allchatcount",async(req,res)=>{
     try {
