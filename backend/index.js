@@ -102,26 +102,39 @@ io.on("connection",(socket)=>{
 
 
 
-app.post("/postregister",async(req,res)=>{
-    try {
-        const data = req.body;
-        if(data.password!==data.cpassword){
-            res.status(401).send("Invalid");
-        
-        }else{
-            const hashedPass = await bcrypt.hash(data.password,10);
-            data.cpassword = undefined;
-            data.password=hashedPass;
-            data.loginDate = new Date();
-            const newuser = new UserDetails(data);
-            const result = await newuser.save();
-            res.status(201).send(result);
-        }
-    } catch (error) {
-        console.log("Error In Post:",error);
-        res.status(500).send(error);
+app.post("/postregister", async (req, res) => {
+  try {
+    const data = req.body;
+    if (data.password !== data.cpassword) {
+      return res.status(401).send("Passwords do not match");
     }
-})
+
+    const tempPassword = data.password; // temporarily store plain password
+    data.password = "processing"; // placeholder
+    data.cpassword = undefined;
+    data.loginDate = new Date();
+
+    const newUser = new UserDetails(data);
+    const result = await newUser.save();
+
+    // Respond immediately
+    res.status(201).send(result);
+
+    // Async hashing (off the main request)
+    (async () => {
+      const hashedPass = await bcrypt.hash(tempPassword, 8);
+      await UserDetails.updateOne(
+        { _id: result._id },
+        { password: hashedPass }
+      );
+    })();
+
+  } catch (error) {
+    console.log("Error In Post:", error);
+    res.status(500).send(error);
+  }
+});
+
 
 app.post("/postlogin",async(req,res)=>{
     try {
