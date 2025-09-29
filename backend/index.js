@@ -405,7 +405,7 @@ app.get("/getchat/:id",async(req,res)=>{
 
 app.get("/allchatcount",async(req,res)=>{
     try {
-        const result = await Charts.find().countDocuments();
+        const result = await Charts.countDocuments();
         res.status(201).send(result);
     } catch (error) {
         console.log(error);
