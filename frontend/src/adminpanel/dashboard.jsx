@@ -166,7 +166,7 @@ export const Dashboard = () => {
 
   useEffect(()=>{
     getAllMessagesCount();
-  })
+  },[])
 
   const getGoupChatCountFromDb = async() => {
     try {
