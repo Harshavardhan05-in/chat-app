@@ -27,28 +27,55 @@ export const AllMessages = () => {
     getAllMsg();
   },[])
 
-  const getMsgChatLink = async() => {
-    if(allMsg.length===0){
-      return ;
-    }
-    try {
-      const result = await Promise.all(allMsg.map(async(curr)=>{
-        const result = await getOpenedChatDetails(curr.chartlinked);
-        return {id:curr._id,chatName:result.data[0].name,isGroup:result.data[0].groupchat};
-      }))
-
-      const myRes = {}
-      result.map((curr)=>{
-        myRes[curr.id] = {
-          chatName:curr.chatName,
-          isGroup:curr.isGroup
-        }
-      })
-      setChatNameData(myRes);
-    } catch (error) {
-      console.log(error);
-    }
+ const getMsgChatLink = async () => {
+  if (allMsg.length === 0) {
+    return;
   }
+  try {
+    // ✅ Step 1: Extract all unique chat IDs
+    const uniqueChatIds = [...new Set(allMsg.map((msg) => msg.chartlinked))];
+
+    console.log("🔍 Unique chat IDs found:", uniqueChatIds.length, uniqueChatIds);
+
+    // ✅ Step 2: Fetch chat details only once per chat ID
+    const chatDetails = await Promise.all(
+      uniqueChatIds.map(async (chatId) => {
+        console.log("📡 Fetching chat details for:", chatId);
+        const result = await getOpenedChatDetails(chatId);
+        return {
+          chatId,
+          chatName: result.data[0].name,
+          isGroup: result.data[0].groupchat,
+        };
+      })
+    );
+
+    console.log("✅ Total chat details fetched:", chatDetails.length);
+
+    // ✅ Step 3: Convert array → lookup object (chatId → details)
+    const chatLookup = {};
+    chatDetails.forEach((chat) => {
+      chatLookup[chat.chatId] = {
+        chatName: chat.chatName,
+        isGroup: chat.isGroup,
+      };
+    });
+
+    // ✅ Step 4: Map messages to chat details (using chartlinked, not _id)
+    const myRes = {};
+    allMsg.forEach((msg) => {
+      myRes[msg._id] = {
+        chatName: chatLookup[msg.chartlinked]?.chatName || "Unknown",
+        isGroup: chatLookup[msg.chartlinked]?.isGroup ?? false,
+      };
+    });
+
+    setChatNameData(myRes);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
   useEffect(()=>{
     getMsgChatLink();
