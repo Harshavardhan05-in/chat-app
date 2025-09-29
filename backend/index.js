@@ -514,16 +514,6 @@ app.get("/chatallmsg/:id",async(req,res)=>{
     }
 })
 
-// app.get("/logoutadmin",async(req,res)=>{
-//     try {
-//         res.clearCookie("admin");
-//         res.status(201).send("Sucess");
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).send(error);
-//     }
-// })
-
 app.get("/checkreq/:id",async(req,res)=>{
     try {
         const id = req.params.id;
@@ -581,7 +571,10 @@ app.delete("/removereq/:userId",async(req,res)=>{
     }
 })
 
-// module.exports = app;
+// in index.js or app.js (backend)
+app.get("/ping", (req, res) => {
+  res.status(200).send("pong");
+});
 
 
 server.listen(port,()=>{
