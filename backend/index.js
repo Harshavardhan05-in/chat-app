@@ -105,33 +105,33 @@ io.on("connection",(socket)=>{
 app.post("/postregister", async (req, res) => {
   try {
     const data = req.body;
+
+    // 1️⃣ Check passwords match
     if (data.password !== data.cpassword) {
       return res.status(401).send("Passwords do not match");
     }
 
-    const tempPassword = data.password; // temporarily store plain password
-    data.password = "processing"; // placeholder
-    data.cpassword = undefined;
+    // 2️⃣ Check if user already exists
+    const existingUser = await UserDetails.findOne({ email: data.email });
+    if (existingUser) {
+      return res.status(409).send("User already exists");
+    }
+
+    // 3️⃣ Hash password with lower salt rounds for faster performance
+    const hashedPass = await bcrypt.hash(data.password, 8); // 6 rounds ~400-500ms
+    data.password = hashedPass;
+    data.cpassword = undefined; // Remove cpassword from DB
     data.loginDate = new Date();
 
+    // 4️⃣ Save new user
     const newUser = new UserDetails(data);
     const result = await newUser.save();
 
-    // Respond immediately
-    res.status(201).send(result);
-
-    // Async hashing (off the main request)
-    (async () => {
-      const hashedPass = await bcrypt.hash(tempPassword, 8);
-      await UserDetails.updateOne(
-        { _id: result._id },
-        { password: hashedPass }
-      );
-    })();
+    return res.status(201).send(result);
 
   } catch (error) {
-    console.log("Error In Post:", error);
-    res.status(500).send(error);
+    console.error("Error in /postregister:", error);
+    return res.status(500).send("Server error");
   }
 });
 
