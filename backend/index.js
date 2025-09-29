@@ -395,7 +395,7 @@ app.get("/mymsg",async(req,res)=>{
 app.get("/getchat/:id",async(req,res)=>{
     try {
         const chatId = req.params.id;
-        const result = await Charts.find({_id:chatId});
+        const result = await Charts.findById(chatId);
         res.status(200).send(result);
     } catch (error) {
         console.log(error);
