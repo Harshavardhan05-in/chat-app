@@ -1,10 +1,10 @@
 
 
-### **SkillSwap – Real-Time Chat Application (MERN Stack)**
+### **Real-Time Chat Application (MERN Stack)**
 
 
 
-SkillSwap is a full-stack real-time chat application built using the MERN stack and Socket.IO, designed to deliver fast, secure, and seamless communication between users.
+It is a full-stack real-time chat application built using the MERN stack and Socket.IO, designed to deliver fast, secure, and seamless communication between users.
 
 The application supports private and group conversations, real-time message delivery, and media sharing with a modern and responsive user interface.
 
